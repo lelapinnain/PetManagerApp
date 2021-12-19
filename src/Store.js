@@ -6,18 +6,28 @@ import {
   petCreateReducer,
   petDeleteReducer,
   petUpdateReducer,
-  petDetailsReducer
+  petDetailsReducer,
 } from './reducers/petReducers'
+
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
 //import reducers
 
-const initialState = {}
+const userInfoFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null
+const test = {}
+const initialState = {
+  userInfo: { uInfo: { userInfoFromStorage } },
+}
 
 const reducer = combineReducers({
   petList: petListReducer,
   petCreate: petCreateReducer,
   petDelete: petDeleteReducer,
-  petUpdate:petUpdateReducer,
-  petDetails:petDetailsReducer
+  petUpdate: petUpdateReducer,
+  petDetails: petDetailsReducer,
+  userInfo: userLoginReducer,
+  userRegister: userRegisterReducer,
 })
 const middleware = [thunk]
 const store = createStore(

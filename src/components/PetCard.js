@@ -1,35 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Moment from 'react-moment'
 import { useNavigate } from 'react-router'
 import { Card, Button } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import { deletePet,listPets } from '../actions/petActions'
+import { useDispatch } from 'react-redux'
+import { deletePet } from '../actions/petActions'
 
-import Modal from './Modal'
-
-function PetCard({ data  }) {
+function PetCard({ data }) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  const petDelete = useSelector((state) => state.petDelete)
-  const { success } = petDelete
 
   const editHandeler = () => {
     navigate(`/${data.petId}`)
   }
   const deleteHandeler = () => {
-    
     if (window.confirm(`are you sure you want to delete ${data.petId} ?`)) {
       dispatch(deletePet(data.petId))
-    
-     }
+    }
   }
-
-  useEffect(() => {}, [useDispatch])
 
   return (
     <Card className="my-3 p-3 rounded">
-      <Card.Img variant="top" fuild src={data.images} onClick={()=> navigate(`/PetDetails/${data.petId}`)} />
+      <Card.Img
+        variant="top"
+        fuild="true"
+        src={data.images}
+        onClick={() => navigate(`/PetDetails/${data.petId}`)}
+      />
       <Card.Body>
         <Card.Title>{data.petName}</Card.Title>
         <Card.Text>

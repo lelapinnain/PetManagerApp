@@ -17,20 +17,35 @@ import {
   PET_UPDATE_REQUEST,
   PET_UPDATE_SUCCESS,
 } from '../constants/petConstants'
+import { USER_LOGOUT } from '../constants/userConstants'
 
+export const listPets = () => async (dispatch, getState) => {
+  //console.log(getState())
+  const {
+    userInfo: {
+      uInfo: { token },
+    },
+  } = getState()
 
-
-export const listPets = () => async (dispatch) => {
   try {
     dispatch({ type: PET_LIST_REQUEST })
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    const { data } = await axios.get('/PetManager/GetAllPetInfo/', config)
 
-    const { data } = await axios.get('/PetManager/GetAllPetInfo/')
-    console.log(data)
     dispatch({
       type: PET_LIST_SUCCESS,
       payload: data,
     })
   } catch (error) {
+    if (error.toString().includes('401')) {
+      // console.log(error)
+      dispatch({ type: USER_LOGOUT })
+    }
     dispatch({
       type: PET_LIST_FAIL,
       payload:
@@ -44,10 +59,9 @@ export const listPets = () => async (dispatch) => {
 export const detailsPet = (id) => async (dispatch) => {
   try {
     dispatch({ type: PET_DETAILS_REQUEST })
-    
+
     const { data } = await axios.get(`/PetManager/GetPetInfo/?petId=${id}`)
-   
-   
+
     dispatch({
       type: PET_DETAILS_SUCCESS,
       payload: data,
@@ -68,6 +82,7 @@ export const createPet = (data) => async (dispatch) => {
     dispatch({ type: PET_CREATE_REQUEST })
     const config = {
       headers: {
+        // "Content-type": "multipart/form-data"
         'Content-type': 'application/json',
       },
     }
@@ -76,10 +91,9 @@ export const createPet = (data) => async (dispatch) => {
     dispatch({
       type: PET_CREATE_SUCCESS,
     })
-    dispatch (listPets())
-    
+    dispatch(listPets())
   } catch (error) {
-    console.log(error)
+    //console.log(error);
     dispatch({
       type: PET_CREATE_FAIL,
       payload:
@@ -94,7 +108,7 @@ export const deletePet = (id) => async (dispatch) => {
     dispatch({ type: PET_DELETE_REQUEST })
     await axios.delete(`PetManager/DeletePetInfo/?petId=${id}`)
     dispatch({ type: PET_DELETE_SUCCESS })
-    dispatch (listPets())
+    dispatch(listPets())
   } catch (error) {
     dispatch({
       type: PET_DELETE_FAIL,
@@ -119,7 +133,7 @@ export const UpdatePet = (data) => async (dispatch) => {
     dispatch({
       type: PET_UPDATE_SUCCESS,
     })
-    
+    dispatch(listPets())
   } catch (error) {
     console.log(error)
     dispatch({

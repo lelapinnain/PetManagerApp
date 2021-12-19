@@ -22,3 +22,15 @@ h2 {
   padding: 1rem;
   text-decoration: 'none';
 }
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+hr.solid {
+  border-top: 3px solid rgb(22, 21, 21);
+}
+.padding {
+  padding-top: 30px;
+}
