@@ -15,7 +15,9 @@ function Input(props) {
         {...rest}
         placeholder={`Enter ${label}`}
       ></Field>
-      <ErrorMessage name={name} />
+      <div className="error">
+        <ErrorMessage name={name} />
+      </div>
     </Form.Group>
   )
 }

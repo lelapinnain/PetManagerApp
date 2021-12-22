@@ -34,3 +34,6 @@ hr.solid {
 .padding {
   padding-top: 30px;
 }
+.error {
+  color: red;
+}

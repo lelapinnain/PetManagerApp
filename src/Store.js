@@ -9,15 +9,21 @@ import {
   petDetailsReducer,
 } from './reducers/petReducers'
 
+import {
+  vaccineAddReducer,
+  vaccineUpdateReducer,
+  vaccineDeleteReducer,
+} from './reducers/vaccinesReducers'
+
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
 //import reducers
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
-  : null
-const test = {}
+  : { token: '' }
+console.log(userInfoFromStorage)
 const initialState = {
-  userInfo: { uInfo: { userInfoFromStorage } },
+  userInfo: { uInfo: userInfoFromStorage },
 }
 
 const reducer = combineReducers({
@@ -26,8 +32,13 @@ const reducer = combineReducers({
   petDelete: petDeleteReducer,
   petUpdate: petUpdateReducer,
   petDetails: petDetailsReducer,
+
   userInfo: userLoginReducer,
   userRegister: userRegisterReducer,
+
+  addVaccine: vaccineAddReducer,
+  updateVaccine: vaccineUpdateReducer,
+  deleteVaccine: vaccineDeleteReducer,
 })
 const middleware = [thunk]
 const store = createStore(

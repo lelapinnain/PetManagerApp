@@ -103,13 +103,22 @@ export const createPet = (data) => async (dispatch) => {
     })
   }
 }
-export const deletePet = (id) => async (dispatch) => {
+export const deletePet = (PetId) => async (dispatch) => {
   try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+      },
+    }
+    console.log({ PetId })
+    let data = { PetId: PetId }
     dispatch({ type: PET_DELETE_REQUEST })
-    await axios.delete(`PetManager/DeletePetInfo/?petId=${id}`)
+    // axios.delete()
+    await axios.delete(`PetManager/DeletePetInfo`, data, config)
     dispatch({ type: PET_DELETE_SUCCESS })
     dispatch(listPets())
   } catch (error) {
+    console.log(error)
     dispatch({
       type: PET_DELETE_FAIL,
       payload:
@@ -128,6 +137,7 @@ export const UpdatePet = (data) => async (dispatch) => {
         'Content-type': 'application/json',
       },
     }
+    console.log(data)
     await axios.put('PetManager/UpdatePetInfo', data, config)
 
     dispatch({
@@ -135,7 +145,7 @@ export const UpdatePet = (data) => async (dispatch) => {
     })
     dispatch(listPets())
   } catch (error) {
-    console.log(error)
+    console.log(error.response.data)
     dispatch({
       type: PET_UPDATE_FAIL,
       payload:

@@ -10,7 +10,9 @@ const Header = () => {
   const navigate = useNavigate()
   const userInfo = useSelector((state) => state.userInfo)
   const { uInfo } = userInfo
+
   //console.log(userInfo.uInfo.token)
+
   const { token } = uInfo
 
   const logoutHandeler = () => {
@@ -32,7 +34,7 @@ const Header = () => {
                 <i className="fas fa-h-square"></i> Vaccines
               </Nav.Link>
 
-              {token ? (
+              {uInfo ? (
                 <NavDropdown
                   title={`Welcome ${uInfo.firstName}`}
                   id="nav-dropdown"

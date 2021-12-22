@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form } from 'react-bootstrap'
 import { Field, ErrorMessage } from 'formik'
-import Message from '../Message'
 
 function Select({ label, name, options }) {
   return (
@@ -14,7 +13,9 @@ function Select({ label, name, options }) {
           </option>
         ))}
       </Field>
-      <ErrorMessage component={Message} name={name} />
+      <div className="error">
+        <ErrorMessage name={name} />
+      </div>
     </Form.Group>
   )
 }

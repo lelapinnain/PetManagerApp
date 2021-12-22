@@ -1,11 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, Form, Button } from 'react-bootstrap'
+import { useSelector, useDispatch } from 'react-redux'
 import { Formik, Form as FormikForm, Field } from 'formik'
 import * as Yup from 'yup'
+import moment from 'moment'
 
 import FormikControl from './FormikControl'
+import { addVaccine } from '../actions/vaccineActions'
+import { detailsPet } from '../actions/petActions'
 
 function Vaccination(props) {
+  const dispatch = useDispatch()
+  const petDetails = useSelector((state) => state.petDetails)
+  const { pet } = petDetails
+  const [Data, setData] = useState([''])
+  const [petId, setPetId] = useState('')
+
+  useEffect(() => {
+    if (Object.keys(pet).length > 0) {
+      setData(pet.vaccinations)
+      setPetId(props.petId)
+    }
+  }, [pet])
+
   const vaccineList = [
     {
       key: 'Select',
@@ -30,7 +47,8 @@ function Vaccination(props) {
       value: 'Panacur',
     },
   ]
-  const { type, data } = props
+  const { type } = props
+
   const initialValues = {
     name: '',
     date: '',
@@ -43,7 +61,15 @@ function Vaccination(props) {
   })
   const handleSubmit = (values) => {
     //dispatch
-    console.log(values)
+    let data = {
+      PetId: '75',
+      VaccinationId: '2',
+      VaccinationDate: '2021-12-24',
+      Notes: '123',
+    }
+    dispatch(addVaccine(data))
+    dispatch(detailsPet(petId))
+    //console.log(values)
   }
 
   return (
@@ -59,12 +85,25 @@ function Vaccination(props) {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
+          {/* {pet.vaccinations.length > 0
+            ? pet.vaccinations.map((item, index) => (
+                <tr key={index + 1}>
+                  <td>{index + 1}</td>
+                  <td>{pet.vaccinations[index].name}</td>
+                  <td>
+                    {moment(pet.vaccinations[index].date).format('MM-DD-yyyy')}
+                  </td>
+                  <td>{pet.vaccinations[index].notes}</td>
+                  <td>Edit/Delete</td>
+                </tr>
+              ))
+            : null} */}
+          {Data.map((item, index) => (
             <tr key={index + 1}>
               <td>{index + 1}</td>
-              <td>{data[index].name}</td>
-              <td>{data[index].date}</td>
-              <td>{data[index].notes}</td>
+              <td>{Data[index].name}</td>
+              <td>{moment(Data[index].date).format('MM-DD-YY')}</td>
+              <td>{Data[index].notes}</td>
               <td>Edit/Delete</td>
             </tr>
           ))}

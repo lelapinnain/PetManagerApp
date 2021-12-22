@@ -7,6 +7,7 @@ import moment from 'moment'
 import FormContainer from '../components/FormContainer'
 import { detailsPet } from '../actions/petActions'
 import Vaccination from '../components/Vaccination'
+import FormikControl from '../components/FormikControl'
 
 function PetDetailsScreen() {
   const dispatch = useDispatch()
@@ -15,25 +16,7 @@ function PetDetailsScreen() {
 
   const petDetails = useSelector((state) => state.petDetails)
   const { pet } = petDetails
-  console.log(petDetails)
-
-  const dummy = [
-    {
-      name: 'test',
-      date: 'test',
-      notes: 'test',
-    },
-    {
-      name: 'test',
-      date: 'test',
-      notes: 'test',
-    },
-    {
-      name: 'test',
-      date: 'test',
-      notes: 'test',
-    },
-  ]
+  // console.log(pet.vaccinations)
 
   useEffect(() => {
     dispatch(detailsPet(petId))
@@ -48,6 +31,7 @@ function PetDetailsScreen() {
               <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src={pet.images} fluid="true" />
               </Card>
+
               <Form.Group controlId="color">
                 <Form.Label>{pet.petName} Color </Form.Label>
                 <Form.Control
@@ -113,10 +97,10 @@ function PetDetailsScreen() {
 
         <Col>
           <h2>Vaccinations</h2>
-          <Vaccination type={'Vaccinations'} data={dummy} />
+          <Vaccination type={'Vaccinations'} petId={petId} />
           <hr className="solid"></hr>
           <h2>Deworming</h2>
-          <Vaccination type={'Deworming'} data={dummy} />
+          <Vaccination type={'Deworming'} />
         </Col>
       </Row>
     </Table>
