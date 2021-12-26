@@ -56,11 +56,26 @@ export const listPets = () => async (dispatch, getState) => {
   }
 }
 
-export const detailsPet = (id) => async (dispatch) => {
+export const detailsPet = (id) => async (dispatch, getState) => {
+  const {
+    userInfo: {
+      uInfo: { token },
+    },
+  } = getState()
+
   try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
     dispatch({ type: PET_DETAILS_REQUEST })
 
-    const { data } = await axios.get(`/PetManager/GetPetInfo/?petId=${id}`)
+    const { data } = await axios.get(
+      `/PetManager/GetPetInfo/?petId=${id}`,
+      config
+    )
 
     dispatch({
       type: PET_DETAILS_SUCCESS,
@@ -77,21 +92,28 @@ export const detailsPet = (id) => async (dispatch) => {
   }
 }
 
-export const createPet = (data) => async (dispatch) => {
+export const createPet = (data) => async (dispatch, getState) => {
+  const {
+    userInfo: {
+      uInfo: { token },
+    },
+  } = getState()
+
   try {
-    dispatch({ type: PET_CREATE_REQUEST })
     const config = {
       headers: {
-        // "Content-type": "multipart/form-data"
         'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     }
+    dispatch({ type: PET_CREATE_REQUEST })
+
     await axios.post('PetManager/AddPetInfo', data, config)
 
     dispatch({
       type: PET_CREATE_SUCCESS,
     })
-    dispatch(listPets())
+    //dispatch(listPets())
   } catch (error) {
     //console.log(error);
     dispatch({
@@ -103,20 +125,29 @@ export const createPet = (data) => async (dispatch) => {
     })
   }
 }
-export const deletePet = (PetId) => async (dispatch) => {
+export const deletePet = (PetId) => async (dispatch, getState) => {
+  const {
+    userInfo: {
+      uInfo: { token },
+    },
+  } = getState()
+
   try {
     const config = {
       headers: {
         'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     }
-    console.log({ PetId })
-    let data = { PetId: PetId }
     dispatch({ type: PET_DELETE_REQUEST })
-    // axios.delete()
-    await axios.delete(`PetManager/DeletePetInfo`, data, config)
+    axios.delete(
+      '/PetManager/DeletePetInfo',
+      { data: { petId: PetId } },
+      config
+    )
+    //await axios.delete(`PetManager/DeletePetInfo`, data, config)
     dispatch({ type: PET_DELETE_SUCCESS })
-    dispatch(listPets())
+    // dispatch(listPets())
   } catch (error) {
     console.log(error)
     dispatch({
@@ -129,15 +160,22 @@ export const deletePet = (PetId) => async (dispatch) => {
   }
 }
 
-export const UpdatePet = (data) => async (dispatch) => {
+export const UpdatePet = (data) => async (dispatch, getState) => {
+  const {
+    userInfo: {
+      uInfo: { token },
+    },
+  } = getState()
+
   try {
-    dispatch({ type: PET_UPDATE_REQUEST })
     const config = {
       headers: {
         'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     }
-    console.log(data)
+    dispatch({ type: PET_UPDATE_REQUEST })
+
     await axios.put('PetManager/UpdatePetInfo', data, config)
 
     dispatch({

@@ -104,7 +104,7 @@ export const deleteVaccine = (id) => async (dispatch, getState) => {
     }
     const { data } = await axios.delete(
       '/PetManager/DeleteVaccination/',
-      id,
+      { data: { Id: id } },
       config
     )
 

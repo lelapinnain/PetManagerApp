@@ -101,7 +101,6 @@ const PetAddScreen = () => {
   const { loading, error } = petCreate
 
   const onSubmit = (values) => {
-    console.log(values)
     let dataSent = {
       PetName: values.petName,
       BuyPrice: values.BuyPrice,
@@ -122,6 +121,7 @@ const PetAddScreen = () => {
       } else {
         dataSent = { ...dataSent, petId }
         dispatch(UpdatePet(dataSent))
+        dispatch(listPets())
         navigate('/')
       }
     } catch (error) {

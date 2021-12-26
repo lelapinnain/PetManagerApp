@@ -3,7 +3,7 @@ import Moment from 'react-moment'
 import { useNavigate } from 'react-router'
 import { Card, Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-import { deletePet } from '../actions/petActions'
+import { deletePet, listPets } from '../actions/petActions'
 
 function PetCard({ data }) {
   const navigate = useNavigate()
@@ -15,6 +15,7 @@ function PetCard({ data }) {
   const deleteHandeler = () => {
     if (window.confirm(`are you sure you want to delete ${data.petId} ?`)) {
       dispatch(deletePet(data.petId))
+      //navigate('/')
     }
   }
 

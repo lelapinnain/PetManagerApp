@@ -20,12 +20,15 @@ function HomeScreen() {
   const { uInfo } = userInfo
   const { token } = uInfo
 
+  const petDelete = useSelector((state) => state.petDelete)
+  const { success: successDelete } = petDelete
+
   useEffect(() => {
     if (!token) {
       navigate('/login')
     }
     dispatch(listPets())
-  }, [dispatch, navigate, token])
+  }, [dispatch, token, successDelete])
 
   return (
     <>

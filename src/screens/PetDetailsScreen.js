@@ -8,6 +8,7 @@ import FormContainer from '../components/FormContainer'
 import { detailsPet } from '../actions/petActions'
 import Vaccination from '../components/Vaccination'
 import FormikControl from '../components/FormikControl'
+import Message from '../components/Message'
 
 function PetDetailsScreen() {
   const dispatch = useDispatch()
@@ -16,11 +17,19 @@ function PetDetailsScreen() {
 
   const petDetails = useSelector((state) => state.petDetails)
   const { pet } = petDetails
+
+  const addVaccine = useSelector((state) => state.addVaccine)
+  const { success: successAdd, error: errorAdd } = addVaccine
+
+  const deleteVaccine = useSelector((state) => state.deleteVaccine)
+  const { success: successDelete } = deleteVaccine
+  const updateVaccine = useSelector((state) => state.updateVaccine)
+  const { success: successUpdate } = updateVaccine
   // console.log(pet.vaccinations)
 
   useEffect(() => {
     dispatch(detailsPet(petId))
-  }, [dispatch, petId])
+  }, [dispatch, petId, successAdd, successDelete, updateVaccine])
   return (
     <Table>
       <Row>
@@ -98,6 +107,7 @@ function PetDetailsScreen() {
         <Col>
           <h2>Vaccinations</h2>
           <Vaccination type={'Vaccinations'} petId={petId} />
+          {errorAdd && <Message>{errorAdd}</Message>}
           <hr className="solid"></hr>
           <h2>Deworming</h2>
           <Vaccination type={'Deworming'} />
