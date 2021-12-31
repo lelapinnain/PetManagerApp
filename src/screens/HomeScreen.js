@@ -28,7 +28,7 @@ function HomeScreen() {
       navigate('/login')
     }
     dispatch(listPets())
-  }, [dispatch, token, successDelete])
+  }, [dispatch, token, successDelete, navigate])
 
   return (
     <>

@@ -76,10 +76,17 @@ const PetAddScreen = () => {
 
   const petId = match.id
 
+  const userInfo = useSelector((state) => state.userInfo)
+  const { uInfo } = userInfo
+  const { token } = uInfo
+
   const petList = useSelector((state) => state.petList)
   const { pets } = petList
 
   useEffect(() => {
+    if (!token) {
+      navigate('/')
+    }
     if (petId) {
       pets.map((p, index) => {
         if (pets[index].petId == petId) {
@@ -95,7 +102,7 @@ const PetAddScreen = () => {
         }
       })
     }
-  }, [petId, pets])
+  }, [petId, pets, token, navigate])
 
   const petCreate = useSelector((state) => state.petCreate)
   const { loading, error } = petCreate

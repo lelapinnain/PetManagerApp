@@ -3,7 +3,7 @@ import Moment from 'react-moment'
 import { useNavigate } from 'react-router'
 import { Card, Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-import { deletePet, listPets } from '../actions/petActions'
+import { deletePet } from '../actions/petActions'
 
 function PetCard({ data }) {
   const navigate = useNavigate()

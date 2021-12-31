@@ -20,7 +20,6 @@ import {
 import { USER_LOGOUT } from '../constants/userConstants'
 
 export const listPets = () => async (dispatch, getState) => {
-  //console.log(getState())
   const {
     userInfo: {
       uInfo: { token },
@@ -43,7 +42,6 @@ export const listPets = () => async (dispatch, getState) => {
     })
   } catch (error) {
     if (error.toString().includes('401')) {
-      // console.log(error)
       dispatch({ type: USER_LOGOUT })
     }
     dispatch({
@@ -82,6 +80,10 @@ export const detailsPet = (id) => async (dispatch, getState) => {
       payload: data,
     })
   } catch (error) {
+    if (error.toString().includes('401')) {
+      dispatch({ type: USER_LOGOUT })
+    }
+
     dispatch({
       type: PET_DETAILS_FAIL,
       payload:
@@ -115,7 +117,9 @@ export const createPet = (data) => async (dispatch, getState) => {
     })
     //dispatch(listPets())
   } catch (error) {
-    //console.log(error);
+    if (error.toString().includes('401')) {
+      dispatch({ type: USER_LOGOUT })
+    }
     dispatch({
       type: PET_CREATE_FAIL,
       payload:
@@ -149,7 +153,9 @@ export const deletePet = (PetId) => async (dispatch, getState) => {
     dispatch({ type: PET_DELETE_SUCCESS })
     // dispatch(listPets())
   } catch (error) {
-    console.log(error)
+    if (error.toString().includes('401')) {
+      dispatch({ type: USER_LOGOUT })
+    }
     dispatch({
       type: PET_DELETE_FAIL,
       payload:
@@ -183,7 +189,9 @@ export const UpdatePet = (data) => async (dispatch, getState) => {
     })
     dispatch(listPets())
   } catch (error) {
-    console.log(error.response.data)
+    if (error.toString().includes('401')) {
+      dispatch({ type: USER_LOGOUT })
+    }
     dispatch({
       type: PET_UPDATE_FAIL,
       payload:

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form as FormikForm } from 'formik'
 import * as Yup from 'yup'
@@ -14,10 +14,10 @@ import FormikControl from '../components/FormikControl'
 function LoginScreen() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [initialValues, setInitialValues] = useState({
+  const initialValues = {
     email: '',
     password: '',
-  })
+  }
 
   const validationSchema = Yup.object({
     email: Yup.string().email().required('Required'),

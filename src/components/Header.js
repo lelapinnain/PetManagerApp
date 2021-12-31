@@ -13,8 +13,6 @@ const Header = () => {
 
   //console.log(userInfo.uInfo.token)
 
-  const { token } = uInfo
-
   const logoutHandeler = () => {
     dispatch(logout())
     navigate('/login')

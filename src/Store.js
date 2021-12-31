@@ -15,6 +15,12 @@ import {
   vaccineDeleteReducer,
 } from './reducers/vaccinesReducers'
 
+import {
+  dewormingAddReducer,
+  dewormingUpdateReducer,
+  dewormingDeleteReducer,
+} from './reducers/dewormingReducers'
+
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
 //import reducers
 
@@ -39,6 +45,10 @@ const reducer = combineReducers({
   addVaccine: vaccineAddReducer,
   updateVaccine: vaccineUpdateReducer,
   deleteVaccine: vaccineDeleteReducer,
+
+  addDeworming: dewormingAddReducer,
+  updateDeworming: dewormingUpdateReducer,
+  deleteDeworming: dewormingDeleteReducer,
 })
 const middleware = [thunk]
 const store = createStore(
