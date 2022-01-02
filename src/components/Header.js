@@ -28,28 +28,63 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link id="RouterNavLink" as={Link} to="/vaccines">
-                <i className="fas fa-h-square"></i> Vaccines
-              </Nav.Link>
-
               {uInfo ? (
-                <NavDropdown
-                  title={`Welcome ${uInfo.firstName}`}
-                  id="nav-dropdown"
-                  menuVariant="dark"
-                >
-                  <NavDropdown.Item>
-                    <Nav.Link id="RouterNavLink" as={Link} to="/profile">
-                      Profile
-                    </Nav.Link>
-                    {/* <Link to="/test">test</Link> */}
-                  </NavDropdown.Item>
-                  <Link to="/test">test</Link>
+                <>
+                  <NavDropdown
+                    title={`Vaccines`}
+                    id="nav-dropdown"
+                    menuVariant="dark"
+                  >
+                    <NavDropdown.Item>
+                      <Nav.Link
+                        id="RouterNavLink"
+                        as={Link}
+                        to="/DailyVaccines/2"
+                      >
+                        DAPPV
+                      </Nav.Link>
+                      {/* <Link to="/test">test</Link> */}
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Nav.Link
+                        id="RouterNavLink"
+                        as={Link}
+                        to="/DailyVaccines/1"
+                      >
+                        IntraTrac3
+                      </Nav.Link>
+                      {/* <Link to="/test">test</Link> */}
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Nav.Link
+                        id="RouterNavLink"
+                        as={Link}
+                        to="/DailyVaccines/3"
+                      >
+                        Rabies
+                      </Nav.Link>
+                      {/* <Link to="/test">test</Link> */}
+                    </NavDropdown.Item>
+                  </NavDropdown>
 
-                  <NavDropdown.Item onClick={logoutHandeler}>
-                    Log Out
-                  </NavDropdown.Item>
-                </NavDropdown>
+                  <NavDropdown
+                    title={`Welcome ${uInfo.firstName}`}
+                    id="nav-dropdown"
+                    menuVariant="dark"
+                  >
+                    <NavDropdown.Item>
+                      <Nav.Link id="RouterNavLink" as={Link} to="/profile">
+                        Profile
+                      </Nav.Link>
+                      {/* <Link to="/test">test</Link> */}
+                    </NavDropdown.Item>
+                    <Link to="/test">test</Link>
+
+                    <NavDropdown.Item onClick={logoutHandeler}>
+                      Log Out
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </>
               ) : (
                 <Nav.Link id="RouterNavLink" as={Link} to="/login">
                   <i className="fas fa-user"></i>Sign In

@@ -13,6 +13,7 @@ import {
   vaccineAddReducer,
   vaccineUpdateReducer,
   vaccineDeleteReducer,
+  vaccinePostponeReducer,
 } from './reducers/vaccinesReducers'
 
 import {
@@ -20,6 +21,8 @@ import {
   dewormingUpdateReducer,
   dewormingDeleteReducer,
 } from './reducers/dewormingReducers'
+
+import { dailyVaccinesReducer } from './reducers/dailyVaccinesReducers'
 
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
 //import reducers
@@ -45,10 +48,13 @@ const reducer = combineReducers({
   addVaccine: vaccineAddReducer,
   updateVaccine: vaccineUpdateReducer,
   deleteVaccine: vaccineDeleteReducer,
+  postponeVaccine: vaccinePostponeReducer,
 
   addDeworming: dewormingAddReducer,
   updateDeworming: dewormingUpdateReducer,
   deleteDeworming: dewormingDeleteReducer,
+
+  dailyVaccines: dailyVaccinesReducer,
 })
 const middleware = [thunk]
 const store = createStore(

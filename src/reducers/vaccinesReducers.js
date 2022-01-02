@@ -5,6 +5,9 @@ import {
   VACCINE_DELETE_FAIL,
   VACCINE_DELETE_REQUEST,
   VACCINE_DELETE_SUCCESS,
+  VACCINE_POSTPONE_FAIL,
+  VACCINE_POSTPONE_REQUEST,
+  VACCINE_POSTPONE_SUCCESS,
   VACCINE_UPDATE_FAIL,
   VACCINE_UPDATE_REQUEST,
   VACCINE_UPDATE_SUCCESS,
@@ -45,6 +48,20 @@ export const vaccineDeleteReducer = (state = {}, action) => {
     case VACCINE_DELETE_SUCCESS:
       return { loading: false, response: action.payload, success: true }
     case VACCINE_DELETE_FAIL:
+      return { loading: false, error: action.payload, success: false }
+
+    default:
+      return state
+  }
+}
+
+export const vaccinePostponeReducer = (state = {}, action) => {
+  switch (action.type) {
+    case VACCINE_POSTPONE_REQUEST:
+      return { loading: true }
+    case VACCINE_POSTPONE_SUCCESS:
+      return { loading: false, response: action.payload, success: true }
+    case VACCINE_POSTPONE_FAIL:
       return { loading: false, error: action.payload, success: false }
 
     default:
