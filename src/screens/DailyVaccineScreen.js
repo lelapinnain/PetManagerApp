@@ -16,7 +16,7 @@ function DailyVaccineScreen() {
   const { token } = uInfo
 
   const addVaccine = useSelector((state) => state.addVaccine)
-  const { success: successAdd, error: errorAdd } = addVaccine
+  const { success: successAdd } = addVaccine
 
   useEffect(() => {
     if (!token) {
@@ -24,7 +24,7 @@ function DailyVaccineScreen() {
     }
 
     dispatch(getDailyVaccinesList(match.id))
-  }, [token, dispatch, navigate, successAdd])
+  }, [token, dispatch, navigate, successAdd, match.id])
   return (
     <>
       <h1>Todays Vaccines </h1>

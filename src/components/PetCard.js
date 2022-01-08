@@ -10,7 +10,7 @@ function PetCard({ data }) {
   const dispatch = useDispatch()
 
   const editHandeler = () => {
-    navigate(`/${data.petId}`)
+    navigate(`/add/${data.petId}`)
   }
   const deleteHandeler = () => {
     if (window.confirm(`are you sure you want to delete ${data.petId} ?`)) {

@@ -13,7 +13,7 @@ function DailyVaccines() {
   const type = match.id
 
   const dailyVaccines = useSelector((state) => state.dailyVaccines)
-  const { data: vaccineList, loading, success } = dailyVaccines
+  const { data: vaccineList, loading } = dailyVaccines
 
   useEffect(() => {}, [type, dispatch])
 

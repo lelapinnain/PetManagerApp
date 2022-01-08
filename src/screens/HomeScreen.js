@@ -7,7 +7,6 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import PetCard from '../components/PetCard'
 import { listPets } from '../actions/petActions'
-import { getDailyVaccinesList } from '../actions/dailyVaccinesActions'
 
 function HomeScreen() {
   const [searchTerm, setSearchTerm] = useState('')

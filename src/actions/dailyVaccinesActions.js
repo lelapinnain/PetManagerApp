@@ -7,7 +7,6 @@ import {
 } from '../constants/dailyVaccinesConstants'
 
 export const getDailyVaccinesList = (id) => async (dispatch, getState) => {
-  //console.log(getState())
   const {
     userInfo: {
       uInfo: { token },
@@ -19,7 +18,7 @@ export const getDailyVaccinesList = (id) => async (dispatch, getState) => {
     const config = {
       headers: {
         'Content-type': 'application/json',
-        //  Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     }
 

@@ -30,6 +30,9 @@ const Header = () => {
             <Nav className="ms-auto">
               {uInfo ? (
                 <>
+                  <Nav.Link id="RouterNavLink" as={Link} to="/Appointments">
+                    <i className="fas fa-table"></i>Appointments
+                  </Nav.Link>
                   <NavDropdown
                     title={`Vaccines`}
                     id="nav-dropdown"

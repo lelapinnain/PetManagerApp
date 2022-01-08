@@ -16,7 +16,6 @@ import {
 } from '../constants/vaccineConstants'
 
 export const addVaccine = (inputData) => async (dispatch, getState) => {
-  //console.log(getState())
   const {
     userInfo: {
       uInfo: { token },
@@ -53,7 +52,6 @@ export const addVaccine = (inputData) => async (dispatch, getState) => {
 }
 
 export const updateVaccine = (inputData) => async (dispatch, getState) => {
-  //console.log(getState())
   const {
     userInfo: {
       uInfo: { token },
@@ -90,7 +88,6 @@ export const updateVaccine = (inputData) => async (dispatch, getState) => {
 }
 
 export const deleteVaccine = (id) => async (dispatch, getState) => {
-  //console.log(getState())
   const {
     userInfo: {
       uInfo: { token },
@@ -127,13 +124,11 @@ export const deleteVaccine = (id) => async (dispatch, getState) => {
 }
 
 export const postponeVaccine = (id) => async (dispatch, getState) => {
-  //console.log(getState())
   const {
     userInfo: {
       uInfo: { token },
     },
   } = getState()
-
   try {
     dispatch({ type: VACCINE_POSTPONE_REQUEST })
     const config = {

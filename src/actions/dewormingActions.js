@@ -13,7 +13,6 @@ import {
 } from '../constants/dewormingConstants'
 
 export const addDeworming = (inputData) => async (dispatch, getState) => {
-  //console.log(getState())
   const {
     userInfo: {
       uInfo: { token },
@@ -50,7 +49,6 @@ export const addDeworming = (inputData) => async (dispatch, getState) => {
 }
 
 export const updateDeworming = (inputData) => async (dispatch, getState) => {
-  //console.log(getState())
   const {
     userInfo: {
       uInfo: { token },
@@ -87,7 +85,6 @@ export const updateDeworming = (inputData) => async (dispatch, getState) => {
 }
 
 export const deleteDeworming = (id) => async (dispatch, getState) => {
-  //console.log(getState())
   const {
     userInfo: {
       uInfo: { token },

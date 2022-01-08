@@ -25,6 +25,12 @@ import {
 import { dailyVaccinesReducer } from './reducers/dailyVaccinesReducers'
 
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
+import {
+  appointmentAddReducer,
+  appointmentDeleteReducer,
+  appointmentListReducer,
+  appointmentUpdateReducer,
+} from './reducers/appointmentReducers'
 //import reducers
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
@@ -53,6 +59,11 @@ const reducer = combineReducers({
   addDeworming: dewormingAddReducer,
   updateDeworming: dewormingUpdateReducer,
   deleteDeworming: dewormingDeleteReducer,
+
+  appointmentList: appointmentListReducer,
+  addAppointment: appointmentAddReducer,
+  updateAppointment: appointmentUpdateReducer,
+  deleteAppointment: appointmentDeleteReducer,
 
   dailyVaccines: dailyVaccinesReducer,
 })

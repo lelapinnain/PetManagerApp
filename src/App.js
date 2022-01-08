@@ -3,12 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import Header from './components/Header'
 import Footer from './components/Footer'
+
 import HomeScreen from './screens/HomeScreen'
 import PetAddScreen from './screens/PetAddScreen'
 import PetDetailsScreen from './screens/PetDetailsScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import DailyVaccineScreen from './screens/DailyVaccineScreen'
+import AppointmentScreen from './screens/AppointmentScreen'
+import AppointmentsForm from './components/Appointment/AppointmentsForm'
 
 function App() {
   return (
@@ -18,7 +21,7 @@ function App() {
         <Container>
           <Routes>
             <Route path="/" element={<HomeScreen />} exact></Route>
-            <Route path="/:id" element={<PetAddScreen />} exact></Route>
+            <Route path="add/:id" element={<PetAddScreen />} exact></Route>
 
             <Route
               path="/PetDetails/:id"
@@ -30,6 +33,23 @@ function App() {
             <Route path="/login" element={<LoginScreen />} exact></Route>
 
             <Route
+              path="/Appointments"
+              element={<AppointmentScreen />}
+              exact
+            ></Route>
+
+            <Route
+              path="/appointmentForm"
+              element={<AppointmentsForm />}
+              exact
+            ></Route>
+            <Route
+              path="/appointmentForm/:id"
+              element={<AppointmentsForm />}
+              exact
+            ></Route>
+
+            <Route
               path="/DailyVaccines/:id"
               element={<DailyVaccineScreen />}
               exact
@@ -37,6 +57,7 @@ function App() {
           </Routes>
         </Container>
       </main>
+
       <Footer />
     </Router>
   )
