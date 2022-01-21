@@ -23,35 +23,37 @@ export const listAppointments =
         uInfo: { token },
       },
     } = getState()
+    console.log(AppointmentDate)
+    if (AppointmentDate) {
+      try {
+        dispatch({ type: APPOINTMENT_LIST_REQUEST })
+        const config = {
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+        const { data } = await axios.get(
+          `/PetManager/GetAppointmentByDate/?AppointmentDate=${AppointmentDate}`,
+          config
+        )
 
-    try {
-      dispatch({ type: APPOINTMENT_LIST_REQUEST })
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+        dispatch({
+          type: APPOINTMENT_LIST_SUCCESS,
+          payload: data,
+        })
+      } catch (error) {
+        if (error.toString().includes('401')) {
+          dispatch({ type: USER_LOGOUT })
+        }
+        dispatch({
+          type: APPOINTMENT_LIST_FAIL,
+          payload:
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+        })
       }
-      const { data } = await axios.get(
-        `/PetManager/GetAppointmentByDate/?AppointmentDate=${AppointmentDate}`,
-        config
-      )
-
-      dispatch({
-        type: APPOINTMENT_LIST_SUCCESS,
-        payload: data,
-      })
-    } catch (error) {
-      if (error.toString().includes('401')) {
-        dispatch({ type: USER_LOGOUT })
-      }
-      dispatch({
-        type: APPOINTMENT_LIST_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      })
     }
   }
 
@@ -95,18 +97,17 @@ export const DeleteAppointment = (ApptId) => async (dispatch, getState) => {
       uInfo: { token },
     },
   } = getState()
-
+  console.log(token)
   try {
     const config = {
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     }
     dispatch({ type: APPOINTMENT_DELETE_REQUEST })
-    axios.delete(
-      '/PetManager/DeleteAppointment',
-      { data: { ApptId: ApptId } },
+    await axios.delete(
+      `/PetManager/DeleteAppointment/?ApptId=${ApptId}`,
       config
     )
 

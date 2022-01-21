@@ -38,10 +38,10 @@ function HomeScreen() {
       ) : (
         <>
           <Row>
-            <Col md={2}>
+            <Col md={3}>
               <h2>Available</h2>
             </Col>
-            <Col md={8}>
+            <Col md={4}>
               <Form.Group controlId="search">
                 <Form.Control
                   autoComplete="off"
@@ -63,6 +63,7 @@ function HomeScreen() {
                 <i className="fas fa-plus-square"></i>
               </Button>
             </Col>
+            <Col md={3}></Col>
           </Row>
           <Row>
             {pets

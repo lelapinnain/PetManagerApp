@@ -6,7 +6,7 @@ import { Formik, Form as FormikForm } from 'formik'
 import * as Yup from 'yup'
 
 import Loader from '../../components/Loader'
-import Message from '../../components/Message'
+//import Message from '../../components/Message'
 import FormContainer from '../../components/FormContainer'
 import {
   UpdateAppointment,
@@ -50,7 +50,7 @@ function AppointmentsForm() {
   const { token } = uInfo
 
   const appointmentList = useSelector((state) => state.appointmentList)
-  const { appointments, loading, error } = appointmentList
+  const { appointments, loading } = appointmentList
 
   useEffect(() => {
     if (!token) {
@@ -92,13 +92,11 @@ function AppointmentsForm() {
     try {
       if (!apptId) {
         dispatch(createAppointment(dataSent))
-        // dispatch(listAppointments(dataSent.AppointmentDate.substring(0, 10)))
         navigate('/Appointments')
       } else {
         dataSent = { ...dataSent, ApptId: apptId }
         console.log(dataSent)
         dispatch(UpdateAppointment(dataSent))
-        //  dispatch(listAppointments(dataSent.AppointmentDate.substring(0, 10)))
         console.log('here')
         navigate('/Appointments')
       }
@@ -110,7 +108,6 @@ function AppointmentsForm() {
   return (
     <>
       {loading && <Loader />}
-      {error && <Message>{error}</Message>}
 
       <Link to="/Appointments" className="btn btn-light my-3">
         Go Back

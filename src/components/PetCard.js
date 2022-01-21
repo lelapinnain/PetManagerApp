@@ -9,14 +9,22 @@ function PetCard({ data }) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  // const editHandeler = () => {
+  //   navigate(`/add/${data.petId}`)
+  // }
+
   const editHandeler = () => {
-    navigate(`/add/${data.petId}`)
+    navigate(`/PetDetails/${data.petId}`)
   }
+
   const deleteHandeler = () => {
     if (window.confirm(`are you sure you want to delete ${data.petId} ?`)) {
       dispatch(deletePet(data.petId))
       //navigate('/')
     }
+  }
+  const sellHandeler = () => {
+    navigate(`/checkout/${data.petId}`)
   }
 
   return (
@@ -35,7 +43,10 @@ function PetCard({ data }) {
         <Card.Text>Microchip: {data.microchip}</Card.Text>
       </Card.Body>
       <div style={{ display: 'flex' }}>
-        <Button onClick={editHandeler}>Edit</Button>
+        <Button variant={'success'} onClick={sellHandeler}>
+          Sell
+        </Button>
+        <Button onClick={editHandeler}>Details</Button>
         <Button variant={'danger'} onClick={deleteHandeler}>
           Delete
         </Button>

@@ -110,11 +110,12 @@ export const createPet = (data) => async (dispatch, getState) => {
     }
     dispatch({ type: PET_CREATE_REQUEST })
 
-    await axios.post('PetManager/AddPetInfo', data, config)
+    axios.post('PetManager/AddPetInfo', data, config).then(
+      dispatch({
+        type: PET_CREATE_SUCCESS,
+      })
+    )
 
-    dispatch({
-      type: PET_CREATE_SUCCESS,
-    })
     //dispatch(listPets())
   } catch (error) {
     if (error.toString().includes('401')) {
@@ -144,13 +145,11 @@ export const deletePet = (PetId) => async (dispatch, getState) => {
       },
     }
     dispatch({ type: PET_DELETE_REQUEST })
-    axios.delete(
-      '/PetManager/DeletePetInfo',
-      { data: { petId: PetId } },
-      config
-    )
+    axios
+      .delete('/PetManager/DeletePetInfo', { data: { petId: PetId } }, config)
+      .then(dispatch({ type: PET_DELETE_SUCCESS }))
     //await axios.delete(`PetManager/DeletePetInfo`, data, config)
-    dispatch({ type: PET_DELETE_SUCCESS })
+
     // dispatch(listPets())
   } catch (error) {
     if (error.toString().includes('401')) {

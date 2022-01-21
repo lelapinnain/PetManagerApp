@@ -31,14 +31,35 @@ import {
   appointmentListReducer,
   appointmentUpdateReducer,
 } from './reducers/appointmentReducers'
+
+import { checkoutReducer } from './reducers/checkoutReducers'
 //import reducers
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : { token: '' }
-console.log(userInfoFromStorage)
+
+const customerInfoFromStorage = localStorage.getItem('customerInfo')
+  ? JSON.parse(localStorage.getItem('customerInfo'))
+  : {}
+
+const petInfoFromStorage = localStorage.getItem('petInfo')
+  ? JSON.parse(localStorage.getItem('petInfo'))
+  : {}
+
+const paymentInfoFromStorage = localStorage.getItem('paymentInfo')
+  ? JSON.parse(localStorage.getItem('paymentInfo'))
+  : {}
+
 const initialState = {
   userInfo: { uInfo: userInfoFromStorage },
+  checkout: {
+    Checkout: {
+      Pet: petInfoFromStorage,
+      Customer: customerInfoFromStorage,
+      Payment: paymentInfoFromStorage,
+    },
+  },
 }
 
 const reducer = combineReducers({
@@ -66,6 +87,8 @@ const reducer = combineReducers({
   deleteAppointment: appointmentDeleteReducer,
 
   dailyVaccines: dailyVaccinesReducer,
+
+  checkout: checkoutReducer,
 })
 const middleware = [thunk]
 const store = createStore(

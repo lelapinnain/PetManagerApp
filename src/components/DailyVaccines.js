@@ -24,10 +24,10 @@ function DailyVaccines() {
       ) : (
         <Table
           responsive
-          striped
           hover
+          striped
           size="sm"
-          style={{ background: 'white' }}
+          style={{ border: '1px solid', 'border-width': '3px' }}
         >
           <thead>
             <tr>

@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 
 import DailyVaccines from '../components/DailyVaccines'
 import { getDailyVaccinesList } from '../actions/dailyVaccinesActions'
-import FormContainer from '../components/FormContainer'
 
 function DailyVaccineScreen() {
   const dispatch = useDispatch()
@@ -18,6 +17,9 @@ function DailyVaccineScreen() {
   const addVaccine = useSelector((state) => state.addVaccine)
   const { success: successAdd } = addVaccine
 
+  const dailyVaccines = useSelector((state) => state.dailyVaccines)
+  const { data } = dailyVaccines
+
   useEffect(() => {
     if (!token) {
       navigate('/login')
@@ -28,9 +30,13 @@ function DailyVaccineScreen() {
   return (
     <>
       <h1>Todays Vaccines </h1>
-      <FormContainer>
-        <DailyVaccines />
-      </FormContainer>
+      <>
+        {data && Object.keys(data).length ? (
+          <DailyVaccines />
+        ) : (
+          <>No Vaccines for today</>
+        )}
+      </>
     </>
   )
 }

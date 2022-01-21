@@ -26,7 +26,7 @@ function AppointmentsTable({ todayDate }) {
     if (todayDate) dispatch(listAppointments(todayDate))
   }, [dispatch, todayDate, successAdd, successUpdate, successDelete])
   return appointments ? (
-    <Table responsive hover size="sm" style={{ background: 'white' }}>
+    <Table responsive hover striped size="sm" className="tableBorder">
       <thead>
         <tr>
           <th>#</th>

@@ -14,6 +14,7 @@ function AppointmentScreen() {
     var yyyy = today.getFullYear()
 
     today = yyyy + '-' + mm + '-' + dd
+    console.log(today)
     setTodayDate(today)
   }, [])
   return (
