@@ -32,7 +32,10 @@ import {
   appointmentUpdateReducer,
 } from './reducers/appointmentReducers'
 
-import { checkoutReducer } from './reducers/checkoutReducers'
+import {
+  checkoutReducer,
+  generateInvoiceReducer,
+} from './reducers/checkoutReducers'
 //import reducers
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
@@ -89,6 +92,7 @@ const reducer = combineReducers({
   dailyVaccines: dailyVaccinesReducer,
 
   checkout: checkoutReducer,
+  generateInvoice: generateInvoiceReducer,
 })
 const middleware = [thunk]
 const store = createStore(

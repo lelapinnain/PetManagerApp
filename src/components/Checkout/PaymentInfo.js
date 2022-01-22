@@ -105,20 +105,20 @@ function PaymentInfo() {
       DepositAmount: values.DepositAmount,
       Tax: values.Tax,
       PriceAfterTax:
-        parseInt(values.PriceAfterDiscount) +
-        parseInt(values.RegistrationFees) +
-        ((parseInt(values.PriceAfterDiscount) +
-          parseInt(values.RegistrationFees)) *
+        parseFloat(values.PriceAfterDiscount) +
+        parseFloat(values.RegistrationFees) +
+        ((parseFloat(values.PriceAfterDiscount) +
+          parseFloat(values.RegistrationFees)) *
           8.375) /
           100,
       RemaningBalance:
-        parseInt(values.PriceAfterDiscount) +
-        parseInt(values.RegistrationFees) +
-        ((parseInt(values.PriceAfterDiscount) +
-          parseInt(values.RegistrationFees)) *
+        parseFloat(values.PriceAfterDiscount) +
+        parseFloat(values.RegistrationFees) +
+        ((parseFloat(values.PriceAfterDiscount) +
+          parseFloat(values.RegistrationFees)) *
           8.375) /
           100 -
-        parseInt(values.DepositAmount),
+        parseFloat(values.DepositAmount),
     }
     dispatch(savePaymentInfo(data))
     navigate('/Summary')
@@ -189,10 +189,43 @@ function PaymentInfo() {
               />
               <FormikControl
                 control="input"
+                type="decimal"
+                name="Tax"
+                label="Tax"
+              />
+              <FormikControl
+                control="input"
                 type="date"
                 label="Pickup Date"
                 name="PickupDate"
               />
+
+              <Form.Group className="mb-3">
+                <Form.Label>Total Balance</Form.Label>
+                <Form.Control
+                  as={Field}
+                  id="Total"
+                  type="text"
+                  name="Total"
+                  value={
+                    formik.values.PriceAfterDiscount +
+                      formik.values.RegistrationFees +
+                      ((formik.values.PriceAfterDiscount +
+                        formik.values.RegistrationFees) *
+                        formik.values.Tax) /
+                        100 ==
+                    'NaN'
+                      ? 0
+                      : parseFloat(formik.values.PriceAfterDiscount) +
+                        parseFloat(formik.values.RegistrationFees) +
+                        ((parseFloat(formik.values.PriceAfterDiscount) +
+                          parseFloat(formik.values.RegistrationFees)) *
+                          parseFloat(8.375)) /
+                          100
+                  }
+                  disabled
+                />
+              </Form.Group>
 
               <FormikControl
                 control="input"
@@ -200,13 +233,6 @@ function PaymentInfo() {
                 name="DepositAmount"
                 label="Deposit Amount"
               />
-              <FormikControl
-                control="input"
-                type="decimal"
-                name="Tax"
-                label="Tax"
-              />
-
               <Button
                 type="submit"
                 disabled={!formik.isValid}

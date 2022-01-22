@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   CHECKOUT_CUSTOMER_ADD,
   // CHECKOUT_CUSTOMER_RESET,
@@ -6,6 +7,9 @@ import {
   CHECKOUT_PAYMENT_ADD,
   // CHECKOUT_PAYMENT_RESET,
   CHECKOUT_RESET,
+  INVOICE_CREATE_REQUEST,
+  INVOICE_CREATE_SUCCESS,
+  INVOICE_CREATE_FAIL,
 } from '../constants/checkoutConstants'
 
 export const savePetInfo = (data) => (dispatch) => {
@@ -44,4 +48,40 @@ export const resetCheckout = (data) => (dispatch) => {
   localStorage.removeItem('customerInfo')
   localStorage.removeItem('paymentInfo')
   localStorage.removeItem('petInfo')
+}
+
+export const generateInvoice = (data) => async (dispatch, getState) => {
+  const {
+    userInfo: {
+      uInfo: { token },
+    },
+  } = getState()
+
+  try {
+    dispatch({ type: INVOICE_CREATE_REQUEST })
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const { data } = await axios.get(
+      `/PetManager/GetDailyVaccinations/`,
+      config
+    )
+    // console.log(response)
+    dispatch({
+      type: INVOICE_CREATE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: INVOICE_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
 }
