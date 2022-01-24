@@ -29,15 +29,15 @@ function PaymentInfo() {
     },
     {
       key: 'CASH',
-      value: 'CASH',
+      value: '1',
     },
     {
       key: 'CARD',
-      value: 'CARD',
+      value: '2',
     },
     {
       key: 'Financing',
-      value: 'Financing',
+      value: '3',
     },
   ]
 

@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
 import { Row, Col, ListGroup, Card, Button } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+
+import { generateInvoiceAction } from '../../actions/checkoutActions'
 
 function Summary() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const checkout = useSelector((state) => state.checkout)
   const { Checkout } = checkout
   const { Payment } = Checkout
@@ -15,11 +18,23 @@ function Summary() {
   const { uInfo } = userInfo
   const { token } = uInfo
 
+  const generateInvoice = useSelector((state) => state.generateInvoice)
+  const { success, data: invoiceData } = generateInvoice
+
   useEffect(() => {
     if (!token) {
       navigate('/')
     }
-  }, [token, navigate])
+  }, [invoiceData, success, token, navigate])
+
+  const handleSubmit = () => {
+    const data = {
+      PetId: Pet.petId,
+      Customer,
+      Payment,
+    }
+    dispatch(generateInvoiceAction(data))
+  }
 
   return (
     <>
@@ -111,8 +126,11 @@ function Summary() {
                 </Row>
               </ListGroup.Item>
             </ListGroup>
-            <Button variant="success">Generate Invoice</Button>
+            <Button variant="success" onClick={handleSubmit}>
+              Generate Invoice
+            </Button>
           </Card>
+          <h4>{success}</h4>
         </Col>
       </Row>
     </>

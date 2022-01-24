@@ -50,7 +50,7 @@ export const resetCheckout = (data) => (dispatch) => {
   localStorage.removeItem('petInfo')
 }
 
-export const generateInvoice = (data) => async (dispatch, getState) => {
+export const generateInvoiceAction = (data) => async (dispatch, getState) => {
   const {
     userInfo: {
       uInfo: { token },
@@ -62,18 +62,44 @@ export const generateInvoice = (data) => async (dispatch, getState) => {
     const config = {
       headers: {
         'Content-type': 'application/json',
+        Accept: 'application/pdf',
         Authorization: `Bearer ${token}`,
       },
     }
+    // axios
+    //   .post(`/PetManager/SubmitInvoice/`, data, {
+    //     responseType: 'arraybuffer',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       Accept: 'application/pdf',
+    //     },
+    //   })
+    //   .then((response) => {
+    //     const url = window.URL.createObjectURL(new Blob([response.data]))
+    //     const link = document.createElement('a')
+    //     link.href = url
+    //     link.setAttribute('download', 'file.pdf') //or any other extension
+    //     document.body.appendChild(link)
+    //     link.click()
+    //   })
+    //   .catch((error) => console.log(error))
 
-    const { data } = await axios.get(
-      `/PetManager/GetDailyVaccinations/`,
+    const response = await axios.post(
+      `/PetManager/SubmitInvoice/`,
+      data,
       config
     )
-    // console.log(response)
+
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'file.pdf') //or any other extension
+    document.body.appendChild(link)
+    link.click()
+    console.log(response)
     dispatch({
       type: INVOICE_CREATE_SUCCESS,
-      payload: data,
+      payload: response.data,
     })
   } catch (error) {
     dispatch({
