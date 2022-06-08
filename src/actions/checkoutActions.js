@@ -1,4 +1,5 @@
 import axios from 'axios'
+import download from 'downloadjs'
 import {
   CHECKOUT_CUSTOMER_ADD,
   // CHECKOUT_CUSTOMER_RESET,
@@ -62,41 +63,17 @@ export const generateInvoiceAction = (data) => async (dispatch, getState) => {
     const config = {
       headers: {
         'Content-type': 'application/json',
-        Accept: 'application/pdf',
+        // Accept: 'application/pdf',
+        // responseType: 'blob',
         Authorization: `Bearer ${token}`,
       },
     }
-    // axios
-    //   .post(`/PetManager/SubmitInvoice/`, data, {
-    //     responseType: 'arraybuffer',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Accept: 'application/pdf',
-    //     },
-    //   })
-    //   .then((response) => {
-    //     const url = window.URL.createObjectURL(new Blob([response.data]))
-    //     const link = document.createElement('a')
-    //     link.href = url
-    //     link.setAttribute('download', 'file.pdf') //or any other extension
-    //     document.body.appendChild(link)
-    //     link.click()
-    //   })
-    //   .catch((error) => console.log(error))
 
-    const response = await axios.post(
-      `/PetManager/SubmitInvoice/`,
-      data,
-      config
-    )
+    const response = await axios.post(`/PetManager/SubmitInvoice/`, data, { config, responseType: 'blob' })
 
-    const url = window.URL.createObjectURL(new Blob([response.data]))
-    const link = document.createElement('a')
-    link.href = url
-    link.setAttribute('download', 'file.pdf') //or any other extension
-    document.body.appendChild(link)
-    link.click()
-    console.log(response)
+    const content = response.headers['content-type']
+    download(response.data, '7enkesh', content)
+
     dispatch({
       type: INVOICE_CREATE_SUCCESS,
       payload: response.data,
@@ -104,10 +81,7 @@ export const generateInvoiceAction = (data) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: INVOICE_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     })
   }
 }

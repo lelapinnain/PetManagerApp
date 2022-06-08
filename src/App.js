@@ -16,6 +16,8 @@ import './components/SideBar/SideBar.css'
 import InvoicePetScreen from './screens/InvoicePetScreen'
 import InvoicePaymentScreen from './screens/InvoicePaymentScreen'
 import InvoiceSummaryScreen from './screens/InvoiceSummaryScreen'
+import InvoiceDashBoard from './components/Invoices/InvoiceDashBoard'
+import InvoiceDetails from './components/Invoices/InvoiceDetails'
 
 function App() {
   const handleClick = () => {
@@ -55,67 +57,26 @@ function App() {
                 <Route path="/" element={<HomeScreen />} exact></Route>
                 <Route path="add/:id" element={<PetAddScreen />} exact></Route>
 
-                <Route
-                  path="/PetDetails/:id"
-                  element={<PetDetailsScreen />}
-                  exact
-                ></Route>
+                <Route path="/Invoices" element={<InvoiceDashBoard />} exact></Route>
+                <Route path="/Invoices/:id" element={<InvoiceDetails />} exact></Route>
+
+                <Route path="/PetDetails/:id" element={<PetDetailsScreen />} exact></Route>
                 <Route path="/add" element={<PetAddScreen />} exact></Route>
-                <Route
-                  path="/register"
-                  element={<RegisterScreen />}
-                  exact
-                ></Route>
+                <Route path="/register" element={<RegisterScreen />} exact></Route>
                 <Route path="/login" element={<LoginScreen />} exact></Route>
 
-                <Route
-                  path="/Appointments"
-                  element={<AppointmentScreen />}
-                  exact
-                ></Route>
+                <Route path="/Appointments" element={<AppointmentScreen />} exact></Route>
 
-                <Route
-                  path="/appointmentForm"
-                  element={<AppointmentsForm />}
-                  exact
-                ></Route>
-                <Route
-                  path="/appointmentForm/:id"
-                  element={<AppointmentsForm />}
-                  exact
-                ></Route>
+                <Route path="/appointmentForm" element={<AppointmentsForm />} exact></Route>
+                <Route path="/appointmentForm/:id" element={<AppointmentsForm />} exact></Route>
 
-                <Route
-                  path="/DailyVaccines/:id"
-                  element={<DailyVaccineScreen />}
-                  exact
-                ></Route>
+                <Route path="/DailyVaccines/:id" element={<DailyVaccineScreen />} exact></Route>
 
-                <Route
-                  path="/CheckoutCustomer"
-                  element={<InvoiceCustomerScreen />}
-                  exact
-                ></Route>
-                <Route
-                  path="/Checkout/:id"
-                  element={<InvoicePetScreen />}
-                  exact
-                ></Route>
-                <Route
-                  path="/Checkout"
-                  element={<InvoicePetScreen />}
-                  exact
-                ></Route>
-                <Route
-                  path="/Payment"
-                  element={<InvoicePaymentScreen />}
-                  exact
-                ></Route>
-                <Route
-                  path="/Summary"
-                  element={<InvoiceSummaryScreen />}
-                  exact
-                ></Route>
+                <Route path="/CheckoutCustomer" element={<InvoiceCustomerScreen />} exact></Route>
+                <Route path="/Checkout/:id" element={<InvoicePetScreen />} exact></Route>
+                <Route path="/Checkout" element={<InvoicePetScreen />} exact></Route>
+                <Route path="/Payment" element={<InvoicePaymentScreen />} exact></Route>
+                <Route path="/Summary" element={<InvoiceSummaryScreen />} exact></Route>
               </Routes>
             </div>
           </div>

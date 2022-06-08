@@ -52,11 +52,11 @@ function VacDewormingTable(props) {
     },
     {
       key: 'DAPPV',
-      value: '1',
+      value: '2',
     },
     {
       key: 'Intratrac',
-      value: '2',
+      value: '1',
     },
     {
       key: 'Rabies',

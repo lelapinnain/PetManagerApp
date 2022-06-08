@@ -1,4 +1,7 @@
 import {
+  PET_BREED_FAIL,
+  PET_BREED_REQUEST,
+  PET_BREED_SUCCESS,
   PET_CREATE_FAIL,
   PET_CREATE_REQUEST,
   PET_CREATE_SUCCESS,
@@ -30,7 +33,7 @@ export const petListReducer = (state = { pets: [] }, action) => {
   }
 }
 
-export const petDetailsReducer = (state = { pet:{} }, action) => {
+export const petDetailsReducer = (state = { pet: {} }, action) => {
   switch (action.type) {
     case PET_DETAILS_REQUEST:
       return { loading: true, pet: [] }
@@ -80,6 +83,20 @@ export const petDeleteReducer = (state = {}, action) => {
       return { loading: false, success: true }
     case PET_DELETE_FAIL:
       return { loading: false, error: action.payload }
+
+    default:
+      return state
+  }
+}
+
+export const petBreedReducer = (state = { breeds: [] }, action) => {
+  switch (action.type) {
+    case PET_BREED_REQUEST:
+      return { loading: true, breeds: [] }
+    case PET_BREED_SUCCESS:
+      return { loading: false, breeds: action.payload }
+    case PET_BREED_FAIL:
+      return { loading: false, error: action.payload, breeds: [] }
 
     default:
       return state

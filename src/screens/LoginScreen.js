@@ -25,6 +25,7 @@ function LoginScreen() {
   })
 
   const userInfo = useSelector((state) => state.userInfo)
+  console.log(userInfo)
   const { uInfo, loading, error } = userInfo
   const { token } = uInfo
 
@@ -45,27 +46,13 @@ function LoginScreen() {
       <h1>Sign In </h1>
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={submitHandeler}
-      >
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandeler}>
         {(formik) => (
           <FormikForm>
-            <FormikControl
-              control="input"
-              type="email"
-              label="Email"
-              name="email"
-            />
-            <FormikControl
-              control="input"
-              type="password"
-              label="Password"
-              name="password"
-            />
+            <FormikControl control="input" type="email" label="Email" name="email" />
+            <FormikControl control="input" type="password" label="Password" name="password" />
 
-            <Button type="submit" variant="primary">
+            <Button type="submit" style={{ margin: 15, float: 'right' }} variant="primary">
               Sign In
             </Button>
           </FormikForm>

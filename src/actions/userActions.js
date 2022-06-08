@@ -25,7 +25,7 @@ export const userLogin = (email, password) => (dispatch) => {
       localStorage.setItem('userInfo', JSON.stringify(res.data))
     })
     .catch((error) => {
-      // console.log(error.response.data.errors.Password);
+      console.log(error)
       dispatch({
         type: USER_LOGIN_FAIL,
         payload:

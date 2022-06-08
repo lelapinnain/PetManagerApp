@@ -22,13 +22,7 @@ function DailyVaccines() {
       {loading ? (
         <Loader />
       ) : (
-        <Table
-          responsive
-          hover
-          striped
-          size="sm"
-          style={{ border: '1px solid', 'border-width': '3px' }}
-        >
+        <Table responsive hover size="sm">
           <thead>
             <tr>
               <th>#</th>
@@ -44,7 +38,7 @@ function DailyVaccines() {
                 <tr>
                   <td>{index + 1}</td>
                   <td>{vaccineList[index].petName}</td>
-                  <td>{vaccineList[index].dob}</td>
+                  <td>{moment(vaccineList[index].dob).format('MM-DD-YYYY')}</td>
                   <td>{vaccineList[index].microchip}</td>
                   <td>
                     <Button

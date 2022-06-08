@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import PetCard from '../components/PetCard'
 import { listPets } from '../actions/petActions'
+import SearchComponent from '../components/SearchComponent'
 
 function HomeScreen() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -42,16 +43,7 @@ function HomeScreen() {
               <h2>Available</h2>
             </Col>
             <Col md={4}>
-              <Form.Group controlId="search">
-                <Form.Control
-                  autoComplete="off"
-                  type="text"
-                  placeholder="Search..."
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value)
-                  }}
-                />
-              </Form.Group>
+              <SearchComponent setSearchTerm={setSearchTerm} />
             </Col>
             <Col md={2}>
               <Button
@@ -60,7 +52,7 @@ function HomeScreen() {
                   navigate('/add')
                 }}
               >
-                <i className="fas fa-plus-square"></i>
+                <i className="fas fa-plus-square"></i>Add
               </Button>
             </Col>
             <Col md={3}></Col>
@@ -71,15 +63,9 @@ function HomeScreen() {
                 if (searchTerm === '') {
                   return val
                 } else if (
-                  val.petName
-                    .toLowerCase()
-                    .includes(searchTerm.toLocaleLowerCase()) ||
-                  val.microchip
-                    .toLowerCase()
-                    .includes(searchTerm.toLocaleLowerCase()) ||
-                  val.dob
-                    .toLocaleLowerCase()
-                    .includes(searchTerm.toLocaleLowerCase())
+                  val.petName.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
+                  val.microchip.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
+                  val.dob.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
                 ) {
                   return val
                 } else {

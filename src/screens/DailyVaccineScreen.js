@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 import DailyVaccines from '../components/DailyVaccines'
 import { getDailyVaccinesList } from '../actions/dailyVaccinesActions'
@@ -29,7 +29,13 @@ function DailyVaccineScreen() {
   }, [token, dispatch, navigate, successAdd, match.id])
   return (
     <>
-      <h1>Todays Vaccines </h1>
+      <Link to="/" className="btn btn-light my-3">
+        Go Back
+      </Link>
+      <h1>
+        Todays{' '}
+        {match.id == 1 ? `IntraTrac3` : match.id == 2 ? `DAPPV` : `Rabies`}{' '}
+      </h1>
       <>
         {data && Object.keys(data).length ? (
           <DailyVaccines />

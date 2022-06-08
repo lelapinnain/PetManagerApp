@@ -9,8 +9,10 @@ import * as Yup from 'yup'
 import FormContainer from '../FormContainer'
 import FormikControl from '../FormikControl'
 import { savePaymentInfo } from '../../actions/checkoutActions'
+import Message from '../Message'
 
 function PaymentInfo() {
+  const [depositError, setDepositError] = useState(false)
   const [initialValues, setInitialValues] = useState({
     ActualPrice: '',
     RegistrationFees: '',
@@ -95,6 +97,17 @@ function PaymentInfo() {
   }, [Payment, token, navigate])
 
   const onSubmit = (values) => {
+    const isValidPrice =
+      values.DepositAmount >
+      parseFloat(values.PriceAfterDiscount) +
+        parseFloat(values.RegistrationFees) +
+        ((parseFloat(values.PriceAfterDiscount) + parseFloat(values.RegistrationFees)) * 8.375) / 100
+    // console.log(isValidPrice)
+    if (isValidPrice) {
+      setDepositError(true)
+      return null
+    }
+    setDepositError(false)
     let data = {
       ActualPrice: values.ActualPrice,
       DiscountAmount: values.ActualPrice - values.PriceAfterDiscount,
@@ -107,17 +120,11 @@ function PaymentInfo() {
       PriceAfterTax:
         parseFloat(values.PriceAfterDiscount) +
         parseFloat(values.RegistrationFees) +
-        ((parseFloat(values.PriceAfterDiscount) +
-          parseFloat(values.RegistrationFees)) *
-          8.375) /
-          100,
+        ((parseFloat(values.PriceAfterDiscount) + parseFloat(values.RegistrationFees)) * 8.375) / 100,
       RemaningBalance:
         parseFloat(values.PriceAfterDiscount) +
         parseFloat(values.RegistrationFees) +
-        ((parseFloat(values.PriceAfterDiscount) +
-          parseFloat(values.RegistrationFees)) *
-          8.375) /
-          100 -
+        ((parseFloat(values.PriceAfterDiscount) + parseFloat(values.RegistrationFees)) * 8.375) / 100 -
         parseFloat(values.DepositAmount),
     }
     dispatch(savePaymentInfo(data))
@@ -141,19 +148,9 @@ function PaymentInfo() {
         >
           {(formik) => (
             <FormikForm>
-              <FormikControl
-                control="input"
-                type="text"
-                name="ActualPrice"
-                label="Actual Price"
-              />
+              <FormikControl control="input" type="text" name="ActualPrice" label="Actual Price" />
 
-              <FormikControl
-                control="input"
-                type="text"
-                name="PriceAfterDiscount"
-                label="Price After Discound"
-              />
+              <FormikControl control="input" type="text" name="PriceAfterDiscount" label="Price After Discound" />
               <Form.Group className="mb-3">
                 <Form.Label>Discount Amount</Form.Label>
                 <Form.Control
@@ -162,12 +159,9 @@ function PaymentInfo() {
                   type="text"
                   name="DiscoundAmount"
                   value={
-                    formik.values.ActualPrice -
-                      formik.values.PriceAfterDiscount ==
-                    'NaN'
+                    formik.values.ActualPrice - formik.values.PriceAfterDiscount == 'NaN'
                       ? 0
-                      : formik.values.ActualPrice -
-                        formik.values.PriceAfterDiscount
+                      : formik.values.ActualPrice - formik.values.PriceAfterDiscount
                   }
                   disabled
                 />
@@ -181,24 +175,9 @@ function PaymentInfo() {
                 options={pMethod}
               />
 
-              <FormikControl
-                control="input"
-                type="text"
-                name="RegistrationFees"
-                label="Registration Fees"
-              />
-              <FormikControl
-                control="input"
-                type="decimal"
-                name="Tax"
-                label="Tax"
-              />
-              <FormikControl
-                control="input"
-                type="date"
-                label="Pickup Date"
-                name="PickupDate"
-              />
+              <FormikControl control="input" type="text" name="RegistrationFees" label="Registration Fees" />
+              <FormikControl control="input" type="decimal" name="Tax" label="Tax" />
+              <FormikControl control="input" type="date" label="Pickup Date" name="PickupDate" />
 
               <Form.Group className="mb-3">
                 <Form.Label>Total Balance</Form.Label>
@@ -210,16 +189,12 @@ function PaymentInfo() {
                   value={
                     formik.values.PriceAfterDiscount +
                       formik.values.RegistrationFees +
-                      ((formik.values.PriceAfterDiscount +
-                        formik.values.RegistrationFees) *
-                        formik.values.Tax) /
-                        100 ==
+                      ((formik.values.PriceAfterDiscount + formik.values.RegistrationFees) * formik.values.Tax) / 100 ==
                     'NaN'
                       ? 0
                       : parseFloat(formik.values.PriceAfterDiscount) +
                         parseFloat(formik.values.RegistrationFees) +
-                        ((parseFloat(formik.values.PriceAfterDiscount) +
-                          parseFloat(formik.values.RegistrationFees)) *
+                        ((parseFloat(formik.values.PriceAfterDiscount) + parseFloat(formik.values.RegistrationFees)) *
                           parseFloat(8.375)) /
                           100
                   }
@@ -227,22 +202,14 @@ function PaymentInfo() {
                 />
               </Form.Group>
 
-              <FormikControl
-                control="input"
-                type="decimal"
-                name="DepositAmount"
-                label="Deposit Amount"
-              />
-              <Button
-                type="submit"
-                disabled={!formik.isValid}
-                variant="primary"
-              >
+              <FormikControl control="input" type="decimal" name="DepositAmount" label="Deposit Amount" />
+              <Button type="submit" disabled={!formik.isValid} variant="primary">
                 Next
               </Button>
             </FormikForm>
           )}
         </Formik>
+        {depositError && <Message children={"Deposit amount can't be more the price of purchase"} />}
       </FormContainer>
     </>
   )

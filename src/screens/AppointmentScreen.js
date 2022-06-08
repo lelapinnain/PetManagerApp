@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Button, Form } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import AppointmentsTable from '../components/Appointment/AppointmentsTable'
 
@@ -14,11 +14,14 @@ function AppointmentScreen() {
     var yyyy = today.getFullYear()
 
     today = yyyy + '-' + mm + '-' + dd
-    console.log(today)
+
     setTodayDate(today)
   }, [])
   return (
     <>
+      <Link to="/" className="btn btn-light my-3">
+        Go Back
+      </Link>
       <Row>
         <Col md={4}>
           <h2>Appointments</h2>

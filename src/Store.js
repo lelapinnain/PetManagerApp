@@ -7,6 +7,7 @@ import {
   petDeleteReducer,
   petUpdateReducer,
   petDetailsReducer,
+  petBreedReducer,
 } from './reducers/petReducers'
 
 import {
@@ -16,11 +17,7 @@ import {
   vaccinePostponeReducer,
 } from './reducers/vaccinesReducers'
 
-import {
-  dewormingAddReducer,
-  dewormingUpdateReducer,
-  dewormingDeleteReducer,
-} from './reducers/dewormingReducers'
+import { dewormingAddReducer, dewormingUpdateReducer, dewormingDeleteReducer } from './reducers/dewormingReducers'
 
 import { dailyVaccinesReducer } from './reducers/dailyVaccinesReducers'
 
@@ -32,10 +29,9 @@ import {
   appointmentUpdateReducer,
 } from './reducers/appointmentReducers'
 
-import {
-  checkoutReducer,
-  generateInvoiceReducer,
-} from './reducers/checkoutReducers'
+import { checkoutReducer, generateInvoiceReducer } from './reducers/checkoutReducers'
+
+import { invoiceDetailsReducer, invoiceListReducer } from './reducers/invoicesReducers'
 //import reducers
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
@@ -46,9 +42,7 @@ const customerInfoFromStorage = localStorage.getItem('customerInfo')
   ? JSON.parse(localStorage.getItem('customerInfo'))
   : {}
 
-const petInfoFromStorage = localStorage.getItem('petInfo')
-  ? JSON.parse(localStorage.getItem('petInfo'))
-  : {}
+const petInfoFromStorage = localStorage.getItem('petInfo') ? JSON.parse(localStorage.getItem('petInfo')) : {}
 
 const paymentInfoFromStorage = localStorage.getItem('paymentInfo')
   ? JSON.parse(localStorage.getItem('paymentInfo'))
@@ -71,6 +65,7 @@ const reducer = combineReducers({
   petDelete: petDeleteReducer,
   petUpdate: petUpdateReducer,
   petDetails: petDetailsReducer,
+  petBreeds: petBreedReducer,
 
   userInfo: userLoginReducer,
   userRegister: userRegisterReducer,
@@ -89,16 +84,15 @@ const reducer = combineReducers({
   updateAppointment: appointmentUpdateReducer,
   deleteAppointment: appointmentDeleteReducer,
 
+  invoicesList: invoiceListReducer,
+  invoiceDetails: invoiceDetailsReducer,
+
   dailyVaccines: dailyVaccinesReducer,
 
   checkout: checkoutReducer,
   generateInvoice: generateInvoiceReducer,
 })
 const middleware = [thunk]
-const store = createStore(
-  reducer,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-)
+const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)))
 
 export default store

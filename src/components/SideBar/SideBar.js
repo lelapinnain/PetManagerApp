@@ -46,27 +46,17 @@ function SideBar() {
       {uInfo ? (
         <ul>
           <li>
-            <NavDropdown
-              title={`Welcome ${uInfo.firstName}`}
-              id="collasible-nav-dropdown"
-              menuVariant="dark"
-            >
+            <NavDropdown title={`Welcome ${uInfo.firstName}`} id="collasible-nav-dropdown" menuVariant="dark">
               <Link id="RouterNavLink" to="/profile">
                 Profile
               </Link>
 
-              <NavDropdown.Item onClick={logoutHandeler}>
-                Log Out
-              </NavDropdown.Item>
+              <NavDropdown.Item onClick={logoutHandeler}>Log Out</NavDropdown.Item>
             </NavDropdown>
           </li>
 
           <li>
-            <NavDropdown
-              title={`Vaccines`}
-              id="nav-dropdown"
-              menuVariant="dark"
-            >
+            <NavDropdown title={`Vaccines`} id="nav-dropdown" menuVariant="dark">
               <Nav.Link id="RouterNavLink" as={Link} to="/DailyVaccines/2">
                 DAPPV
               </Nav.Link>
@@ -86,6 +76,11 @@ function SideBar() {
           <li>
             <Nav.Link id="RouterNavLink" as={Link} to="/Appointments">
               <i className="fas fa-table"></i>Appointments
+            </Nav.Link>
+          </li>
+          <li>
+            <Nav.Link id="RouterNavLink" as={Link} to="/Invoices">
+              <i className="fas fa-table"></i>Invoices
             </Nav.Link>
           </li>
         </ul>
