@@ -10,7 +10,7 @@ import {
   INVOICE_DETAILS_SUCCESS,
 } from '../constants/invoicesConstants'
 
-export const listInvoices = () => async (dispatch, getState) => {
+export const listInvoices = (nextPageIndex) => async (dispatch, getState) => {
   const {
     userInfo: {
       uInfo: { token },
@@ -25,11 +25,24 @@ export const listInvoices = () => async (dispatch, getState) => {
         Authorization: `Bearer ${token}`,
       },
     }
-    const { data } = await axios.get('/PetManager/GetInvoicesAll/', config)
-
+    let data = []
+    let headers = {}
+    if (nextPageIndex === 0) {
+      const res = await axios.get('/PetManager/GetInvoicesAll/', config)
+      data = res.data
+      headers = res.headers
+    } else {
+      const res = await axios.get(
+        `/PetManager/GetInvoicesAll/?PageNumber=${nextPageIndex}&PageSize=${30}`,
+        config
+      )
+      data = res.data
+      headers = res.headers
+    }
     dispatch({
       type: INVOICES_LIST_SUCCESS,
       payload: data,
+      pagination: JSON.parse(headers['pagination']),
     })
   } catch (error) {
     if (error.toString().includes('401')) {
@@ -37,7 +50,10 @@ export const listInvoices = () => async (dispatch, getState) => {
     }
     dispatch({
       type: INVOICES_LIST_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     })
   }
 }
@@ -58,7 +74,10 @@ export const detailsInvoice = (id) => async (dispatch, getState) => {
     }
     dispatch({ type: INVOICE_DETAILS_REQUEST })
 
-    const { data } = await axios.get(`/PetManager/GetInvoiceDetails/?id=${id}`, config)
+    const { data } = await axios.get(
+      `/PetManager/GetInvoiceDetails/?id=${id}`,
+      config
+    )
 
     dispatch({
       type: INVOICE_DETAILS_SUCCESS,
@@ -71,7 +90,10 @@ export const detailsInvoice = (id) => async (dispatch, getState) => {
 
     dispatch({
       type: INVOICE_DETAILS_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     })
   }
 }

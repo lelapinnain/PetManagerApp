@@ -21,7 +21,7 @@ function InvoiceDetails({ invoice }) {
       <h1>Order Summary</h1>
       <Row>
         <Col md={8}>
-          <ListGroup variant="flush" style={{ background: 'white' }}>
+          <ListGroup variant='flush' style={{ background: 'white' }}>
             <ListGroup.Item>
               <h2>Puppy Information</h2>
               <p>
@@ -60,7 +60,7 @@ function InvoiceDetails({ invoice }) {
         </Col>
         <Col md={4}>
           <Card>
-            <ListGroup variant="flush">
+            <ListGroup variant='flush'>
               <ListGroup.Item>
                 <h2>Payment Summary</h2>
               </ListGroup.Item>
@@ -106,7 +106,7 @@ function InvoiceDetails({ invoice }) {
                 </Row>
               </ListGroup.Item>
             </ListGroup>
-            <Button variant="success">Generate Invoice</Button>
+            <Button variant='success'>Generate Invoice</Button>
           </Card>
         </Col>
       </Row>

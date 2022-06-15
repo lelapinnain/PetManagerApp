@@ -7,12 +7,20 @@ import {
   INVOICE_DETAILS_SUCCESS,
 } from '../constants/invoicesConstants'
 
-export const invoiceListReducer = (state = { invoices: [] }, action) => {
+export const invoiceListReducer = (
+  state = { invoices: [], pagination: {} },
+  action
+) => {
   switch (action.type) {
     case INVOICES_LIST_REQUEST:
-      return { loading: true, invoices: [] }
+      return { loading: true, invoices: [], pagination: {} }
     case INVOICES_LIST_SUCCESS:
-      return { loading: false, invoices: action.payload }
+      return {
+        loading: false,
+        invoices: action.payload,
+        pagination: action.pagination,
+        success: true,
+      }
     case INVOICES_LIST_FAIL:
       return { loading: false, error: action.payload }
 
@@ -21,7 +29,10 @@ export const invoiceListReducer = (state = { invoices: [] }, action) => {
   }
 }
 
-export const invoiceDetailsReducer = (state = { selectedInvoice: {} }, action) => {
+export const invoiceDetailsReducer = (
+  state = { selectedInvoice: {} },
+  action
+) => {
   switch (action.type) {
     case INVOICE_DETAILS_REQUEST:
       return { loading: true, selectedInvoice: [] }

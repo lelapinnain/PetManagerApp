@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router'
 import moment from 'moment'
 
 import SearchComponent from '../SearchComponent'
+import Paging from '../Paging'
 
 function InvoicesTable() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -17,17 +18,17 @@ function InvoicesTable() {
   const { token } = uInfo
 
   const invoicesList = useSelector((state) => state.invoicesList)
-  const { invoices } = invoicesList
+  const { invoices, pagination } = invoicesList
 
   useEffect(() => {
     if (!token) {
       navigate('/login')
     }
-    dispatch(listInvoices())
+    dispatch(listInvoices(0))
   }, [dispatch, token, navigate])
 
-  const handleClick = (e) => {
-    e.preventDefault()
+  const handleClick = (nextPageIndex) => {
+    dispatch(listInvoices(nextPageIndex))
   }
 
   return (
@@ -40,7 +41,14 @@ function InvoicesTable() {
         <Col md={4}></Col>
       </Row>
 
-      <Table responsive hover striped size="sm" className="tableBorder" style={{ margin: '20px' }}>
+      <Table
+        responsive
+        hover
+        striped
+        size='sm'
+        className='tableBorder'
+        style={{ margin: '20px' }}
+      >
         <thead>
           <tr>
             <th>#</th>
@@ -60,15 +68,19 @@ function InvoicesTable() {
                 if (searchTerm === '') {
                   return val
                 } else if (
-                  val.firstName.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
-                  val.lastName.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+                  val.firstName
+                    .toLowerCase()
+                    .includes(searchTerm.toLocaleLowerCase()) ||
+                  val.lastName
+                    .toLowerCase()
+                    .includes(searchTerm.toLocaleLowerCase())
                 ) {
                   return val
                 } else {
                 }
               })
               .map((inv) => (
-                <tr>
+                <tr key={inv.invoiceId}>
                   <td>{inv.invoiceId}</td>
                   <td>
                     {inv.firstName} {inv.lastName}
@@ -81,7 +93,7 @@ function InvoicesTable() {
 
                   <td>
                     <Button
-                      variant="info"
+                      variant='info'
                       onClick={(e) => {
                         e.preventDefault()
                         navigate(`/Invoices/${inv.invoiceId}`)
@@ -89,12 +101,20 @@ function InvoicesTable() {
                     >
                       Edit
                     </Button>
-                    <Button variant="danger">Delete</Button>
+                    <Button variant='danger'>Delete</Button>
                   </td>
                 </tr>
               ))}
         </tbody>
       </Table>
+      {pagination && (
+        <Paging
+          items={invoices}
+          totalPages={pagination.totalPages}
+          currentPage={pagination.currentPage}
+          handleClick={handleClick}
+        />
+      )}
     </>
   )
 }
